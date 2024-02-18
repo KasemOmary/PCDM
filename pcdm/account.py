@@ -19,7 +19,7 @@ class AccountPartyRole(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
@@ -68,7 +68,7 @@ class Account(Base):
 
     account_type_code = Column(Integer)
 
-    account_name = Column(String)
+    account_name = Column(String(100))
 
     account_party_role = relationship(
         'AccountPartyRole',
@@ -174,7 +174,7 @@ class Provider(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
@@ -267,7 +267,7 @@ class AccountRole(Base):
     )
 
     provider_id = Column(
-        String,
+        Integer,
         ForeignKey('provider.provider_id')
     )
 
@@ -554,7 +554,7 @@ class Policy(Base):
 
     expiration_date = Column(Date)
 
-    status_code = Column(String)
+    status_code = Column(String(10))
 
     geographic_location_id = Column(
         Integer,

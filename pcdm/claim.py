@@ -28,7 +28,7 @@ class Occurrence(Base):
 
     occurrence_end_time = Column(Time)
 
-    occurrence_name = String
+    occurrence_name = String(255)
 
     geographic_location = relationship(
         'GeographicLocation',
@@ -72,7 +72,7 @@ class Catastrophe(Base):
 
     catastrophe_type_code = Column(Integer)
 
-    catastrophe_name = Column(String)
+    catastrophe_name = Column(String(255))
 
     industry_catastrophe_code = Column(Integer)
 
@@ -271,7 +271,7 @@ class ClaimOffer(Base):
 
     settlement_offer_amount = Column(Float)
 
-    settlement_offer_provision_description = Column(String)
+    settlement_offer_provision_description = Column(String(1000))
 
     claim_amount = relationship(
         'ClaimAmount',
@@ -326,7 +326,7 @@ class ClaimFolder(Base):
         ForeignKey('claim.claim_id')
     )
 
-    claim_folder_label_name = Column(String)
+    claim_folder_label_name = Column(String(255))
 
     claim = relationship(
         'Claim',
@@ -401,7 +401,7 @@ class Arbitration(Base):
         primary_key=True
     )
 
-    arbitration_description = Column(String)
+    arbitration_description = Column(String(1000))
 
     claim_offer = relationship(
         'ClaimOffer',
@@ -446,7 +446,7 @@ class Litigation(Base):
         ForeignKey('court_jurisdiction.court_jurisdiction_id')
     )
 
-    litigation_description = Column(String)
+    litigation_description = Column(String(1000))
 
     claim_offer = relationship(
         'ClaimOffer',
@@ -503,7 +503,7 @@ class ArbitrationPartyRole(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
@@ -685,7 +685,7 @@ class LitigationPartyRole(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 

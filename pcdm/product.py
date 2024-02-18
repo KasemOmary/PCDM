@@ -13,9 +13,9 @@ class LineOfBusiness(Base):
         primary_key=True
     )
 
-    line_of_business_name = Column(String)
+    line_of_business_name = Column(String(100))
 
-    line_of_business_description = Column(String)
+    line_of_business_description = Column(String(1000))
 
     line_of_business_code = Column(Integer)
 
@@ -71,9 +71,9 @@ class LineOfBusinessGroup(Base):
         primary_key=True
     )
 
-    line_of_business_group_name = Column(String)
+    line_of_business_group_name = Column(String(100))
 
-    line_of_business_group_description = Column(String)
+    line_of_business_group_description = Column(String(1000))
 
     line_of_business = relationship(
         'LineOfBusiness',
@@ -99,9 +99,9 @@ class InsuranceClass(Base):
         primary_key=True
     )
 
-    insurance_class_name = Column(String)
+    insurance_class_name = Column(String(100))
 
-    insurance_class_description = Column(String)
+    insurance_class_description = Column(String(1000))
 
     line_of_business = relationship(
         'LineOfBusiness',
@@ -127,9 +127,9 @@ class CoverageType(Base):
         primary_key=True
     )
 
-    coverage_type_name = Column(String)
+    coverage_type_name = Column(String(100))
 
-    coverage_type_description = Column(String)
+    coverage_type_description = Column(String(1000))
 
     coverage = relationship(
         'Coverage',
@@ -155,9 +155,9 @@ class CoverageGroup(Base):
         primary_key=True
     )
 
-    coverage_group_name = Column(String)
+    coverage_group_name = Column(String(100))
 
-    coverage_group_description = Column(String)
+    coverage_group_description = Column(String(1000))
 
     coverage = relationship(
         'Coverage',
@@ -241,7 +241,7 @@ class CoverageLevel(Base):
 
     deductible_rate = Column(Float)
 
-    coverage_label_name = Column(String)
+    coverage_label_name = Column(String(100))
 
     coverage = relationship(
         'Coverage',
@@ -283,9 +283,9 @@ class CoverageLimitType(Base):
         primary_key=True
     )
 
-    coverage_limit_name = Column(String)
+    coverage_limit_name = Column(String(100))
 
-    coverage_limit_description = Column(String)
+    coverage_limit_description = Column(String(1000))
 
     coverage_level = relationship(
         'CoverageLevel',
@@ -380,11 +380,11 @@ class State(Base):
     __tablename__ = 'state'
 
     state_code = Column(
-        String,
+        String(10),
         primary_key=True
     )
 
-    state_name = Column(String)
+    state_name = Column(String(100))
 
     geographic_location = relationship(
         'GeographicLocation',
@@ -456,9 +456,9 @@ class Company(Base):
 
     company_code = Column(Integer)
 
-    company_name = Column(String)
+    company_name = Column(String(100))
 
-    company_description = Column(String)
+    company_description = Column(String(1000))
 
     company_jurisdiction = relationship(
         'CompanyJurisdiction',

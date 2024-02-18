@@ -20,13 +20,13 @@ class Vehicle(Base):
 
     vehicle_model_year = Column(Integer)
 
-    vehicle_model_name = Column(String)
+    vehicle_model_name = Column(String(100))
 
     vehicle_driving_wheel_quantity = Column(Integer)
 
-    vehicle_make_name = Column(String)
+    vehicle_make_name = Column(String(100))
 
-    vehicle_identification_number = Column(String)
+    vehicle_identification_number = Column(String(100))
 
     insurable_object = relationship(
         'InsurableObject',

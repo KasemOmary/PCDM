@@ -18,9 +18,9 @@ class OrganizationUnit(Base):
         ForeignKey('organization.organization_id')
     )
 
-    organization_unit_name = Column(String)
+    organization_unit_name = Column(String(100))
 
-    organization_unit_description = Column(String)
+    organization_unit_description = Column(String(1000))
 
     industry_code = Column(Integer)
 

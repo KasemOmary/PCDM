@@ -17,9 +17,9 @@ class Product(Base):
         ForeignKey('line_of_business.line_of_business_id')
     )
 
-    licensed_product_name = Column(String)
+    licensed_product_name = Column(String(255))
 
-    product_description = Column(String)
+    product_description = Column(String(1000))
 
     agreement = relationship(
         'Agreement',
@@ -286,7 +286,7 @@ class CoveragePart(Base):
         primary_key=True
     )
 
-    coverage_part_name = Column(String)
+    coverage_part_name = Column(String(100))
 
     policy_coverage_part = relationship(
         'PolicyCoveragePart',
@@ -332,9 +332,9 @@ class Coverage(Base):
         ForeignKey('coverage_type.coverage_type_id')
     )
 
-    coverage_name = Column(String)
+    coverage_name = Column(String(100))
 
-    coverage_description = Column(String)
+    coverage_description = Column(String(1000))
 
     coverage_group_id = Column(
         Integer,
@@ -433,7 +433,7 @@ class PolicyCoverageDetail(Base):
 
     coverage_inclusion_exclusion_code = Column(Integer)
 
-    coverage_description = Column(String)
+    coverage_description = Column(String(1000))
 
     policy = relationship(
         'Policy',
@@ -524,9 +524,9 @@ class PolicyForm(Base):
         ForeignKey('policy.policy_id')
     )
 
-    policy_form_number = Column(String)
+    policy_form_number = Column(String(100))
 
-    form_value = Column(String)
+    form_value = Column(String(1000))
 
     policy = relationship(
         'Policy',
@@ -778,17 +778,17 @@ class LocationAddress(Base):
         primary_key=True
     )
 
-    line_1_address = Column(String)
+    line_1_address = Column(String(100))
 
-    line_2_address = Column(String)
+    line_2_address = Column(String(100))
 
-    municipality_name = Column(String)
+    municipality_name = Column(String(100))
 
-    state_code = Column(String)
+    state_code = Column(String(10))
 
-    postal_code = Column(String)
+    postal_code = Column(String(20))
 
-    country_code = Column(String)
+    country_code = Column(String(10))
 
     begin_date = Column(Date)
 
@@ -836,7 +836,7 @@ class PhysicalLocation(Base):
         primary_key=True
     )
 
-    physical_location_name = Column(String)
+    physical_location_name = Column(String(100))
 
     latitude_value = Column(Float)
 
@@ -850,7 +850,7 @@ class PhysicalLocation(Base):
 
     vertical_accuracy_value = Column(Float)
 
-    travel_direction_description = Column(String)
+    travel_direction_description = Column(String(1000))
 
     location_address_id = Column(
         Integer,

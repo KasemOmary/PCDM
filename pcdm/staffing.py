@@ -74,9 +74,9 @@ class StaffPosition(Base):
         primary_key=True
     )
 
-    staff_position_name = Column(String)
+    staff_position_name = Column(String(100))
 
-    staff_position_description = Column(String)
+    staff_position_description = Column(String(1000))
 
     staff_classification_code = Column(
         Integer,
@@ -115,9 +115,9 @@ class StaffClassification(Base):
         primary_key=True
     )
 
-    staff_classification_name = Column(String)
+    staff_classification_name = Column(String(100))
 
-    staff_classification_description = Column(String)
+    staff_classification_description = Column(String(1000))
 
     staff_position = relationship(
         'StaffPosition',
@@ -144,7 +144,7 @@ class StaffingOrganization(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
@@ -171,7 +171,7 @@ class Staff(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 

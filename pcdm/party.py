@@ -18,25 +18,25 @@ class Person(Base):
         ForeignKey('party.party_id')
     )
 
-    prefix_name = Column(String)
+    prefix_name = Column(String(10))
 
-    first_name = Column(String)
+    first_name = Column(String(50))
 
-    middle_name = Column(String)
+    middle_name = Column(String(50))
 
-    last_name = Column(String)
+    last_name = Column(String(50))
 
-    suffix_name = Column(String)
+    suffix_name = Column(String(50))
 
-    full_legal_name = Column(String)
+    full_legal_name = Column(String(255))
 
-    nickname = Column(String)
+    nickname = Column(String(50))
 
     birth_date = Column(Date)
 
-    birth_place_name = Column(String)
+    birth_place_name = Column(String(255))
 
-    gender_code = Column(String)
+    gender_code = Column(String(25))
 
     person_profession = relationship(
         'PersonProfession',
@@ -119,7 +119,7 @@ class PersonProfession(Base):
         ForeignKey('person.person_id')
     )
 
-    profession_name = Column(String)
+    profession_name = Column(String(255))
 
     person = relationship(
         'Person',
@@ -152,19 +152,19 @@ class Organization(Base):
 
     organization_type_code = Column(Integer)
 
-    organization_name = Column(String)
+    organization_name = Column(String(100))
 
-    alternate_name = Column(String)
+    alternate_name = Column(String(100))
 
-    acronym_name = Column(String)
+    acronym_name = Column(String(100))
 
-    industry_type_code = Column(String)
+    industry_type_code = Column(String(10))
 
-    industry_code = Column(String)
+    industry_code = Column(String(10))
 
-    dun_and_bradstreet_id = Column(String)
+    dun_and_bradstreet_id = Column(String(50))
 
-    organization_description = Column(String)
+    organization_description = Column(String(255))
 
     staff_work_assignment = relationship(
         'StaffWorkAssignment',
@@ -286,7 +286,7 @@ class HouseholdPersonRole(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
@@ -403,7 +403,7 @@ class StaffWorkAssignment(Base):
 
     begin_date = Column(Date)
     party_role_code = Column(
-        Integer,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
     end_date = Column(Date)
@@ -463,7 +463,7 @@ class Grouping(Base):
         ForeignKey('party.party_id')
     )
 
-    grouping_name = Column(String)
+    grouping_name = Column(String(100))
 
     staff_work_assignment = relationship(
         'StaffWorkAssignment',
@@ -515,13 +515,13 @@ class PartyRole(Base):
     __tablename__ = 'party_role'
 
     party_role_code = Column(
-        String,
+        String(10),
         primary_key=True
     )
 
-    party_role_name = Column(String)
+    party_role_name = Column(String(100))
 
-    party_role_description = Column(String)
+    party_role_description = Column(String(255))
 
     staff_work_assignment = relationship(
         'StaffWorkAssignment',
@@ -631,9 +631,9 @@ class Party(Base):
         primary_key=True
     )
 
-    party_name = Column(String)
+    party_name = Column(String(100))
 
-    party_type_code = Column(String)
+    party_type_code = Column(String(10))
 
     begin_date = Column(Date)
 
@@ -663,7 +663,7 @@ class Party(Base):
         back_populates='party'
     )
 
-    related_party_relationship = relationship(
+    party_related_party_relationship = relationship(
         'PartyRelationship',
         primaryjoin='Party.party_id = PartyRelationship.related_party_id',
         back_populates='related_party'
@@ -761,7 +761,9 @@ class PartyRelationship(Base):
         ForeignKey('party.party_id')
     )
 
-    relationship_type_code = Column(String)
+    relationship_type_code = Column(
+        String(10),
+    )
 
     begin_date = Column(Date)
 
@@ -776,7 +778,7 @@ class PartyRelationship(Base):
     related_party = relationship(
         'Party',
         primaryjoin='PartyRelationship.related_party_id = Party.party_id',
-        back_populates='related_party_relationship'
+        back_populates='party_related_party_relationship'
     )
 
     party_relationship_role = relationship(
@@ -806,11 +808,13 @@ class PartyRelationship(Base):
     def __repr__(self):
         return "<PartyRelationship(" \
                "party_id='%s', " \
+               "related_party_id='%s', " \
                "relationship_type_code='%s', " \
                "begin_date='%s', " \
                "end_date='%s', " \
                ")>" % (
                    self.party_id,
+                   self.related_party_id,
                    self.relationship_type_code,
                    self.begin_date,
                    self.end_date
@@ -836,17 +840,17 @@ class PartyRelationshipRole(Base):
     )
 
     relationship_type_code = Column(
-        Integer,
-        ForeignKey('party_relationship.relationship_type_code')
+        String(10),
+        # ForeignKey('party_relationship.relationship_type_code')
     )
 
     relationship_begin_date = Column(
         Date,
-        ForeignKey('party_relationship.begin_date')
+        # ForeignKey('party_relationship.begin_date')
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
@@ -864,17 +868,17 @@ class PartyRelationshipRole(Base):
         back_populates='related_party_relationship_role'
     )
 
-    party_relationship_type_code = relationship(
-        'PartyRelationship',
-        primaryjoin='PartyRelationshipRole.relationship_type_code == PartyRelationship.relationship_type_code',
-        back_populates='party_relationship_role_type_code'
-    )
+    # party_relationship_type_code = relationship(
+    #     'PartyRelationship',
+    #     primaryjoin='PartyRelationshipRole.relationship_type_code == PartyRelationship.relationship_type_code',
+    #     back_populates='party_relationship_role_type_code'
+    # )
 
-    party_relationship_begin_date = relationship(
-        'PartyRelationship',
-        primaryjoin='PartyRelationshipRole.relationship_begin_date == PartyRelationship.begin_date',
-        back_populates='party_relationship_role_begin_date'
-    )
+    # party_relationship_begin_date = relationship(
+    #     'PartyRelationship',
+    #     primaryjoin='PartyRelationshipRole.relationship_begin_date == PartyRelationship.begin_date',
+    #     back_populates='party_relationship_role_begin_date'
+    # )
 
     party_role = relationship(
         'PartyRole',
@@ -918,8 +922,8 @@ class LegalJurisdictionPartyIdentity(Base):
         ForeignKey('party.party_id')
     )
 
-    legal_identity_type_code = Column(String)
-    legal_classification_code = Column(String)
+    legal_identity_type_code = Column(String(10))
+    legal_classification_code = Column(String(10))
 
     party = relationship(
         'Party',
@@ -955,9 +959,9 @@ class LegalJurisdiction(Base):
         primary_key=True
     )
 
-    legal_jurisdiction_name = Column(String)
-    legal_jurisdiction_description = Column(String)
-    rules_preference_description = Column(String)
+    legal_jurisdiction_name = Column(String(100))
+    legal_jurisdiction_description = Column(String(1000))
+    rules_preference_description = Column(String(1000))
 
     legal_jurisdiction_party_identity = relationship(
         'LegalJurisdictionPartyIdentity',
@@ -1005,7 +1009,7 @@ class PartyCommunication(Base):
 
     preference_day_and_time_group_code = Column(Integer)
 
-    party_routing_description = Column(String)
+    party_routing_description = Column(String(1000))
 
     party = relationship(
         'Party',
@@ -1049,9 +1053,9 @@ class CommunicationIdentity(Base):
         primary_key=True
     )
 
-    communication_type_code = Column(String)
-    communication_value = Column(String)
-    communication_qualifier_value = Column(String)
+    communication_type_code = Column(String(10))
+    communication_value = Column(String(255))
+    communication_qualifier_value = Column(String(255))
 
     geographic_location_id = Column(
         Integer,
@@ -1092,16 +1096,16 @@ class GeographicLocation(Base):
         primary_key=True
     )
 
-    geographic_location_type_code = Column(String)
+    geographic_location_type_code = Column(String(10))
 
-    location_code = Column(String)
+    location_code = Column(String(10))
 
-    location_name = Column(String)
+    location_name = Column(String(100))
 
-    location_number = Column(String)
+    location_number = Column(String(25))
 
     state_code = Column(
-        String,
+        String(10),
         ForeignKey('state.state_code')
     )
 
@@ -1348,7 +1352,7 @@ class Claim(Base):
 
     company_subclaim_number = Column(Integer)
 
-    claim_description = Column(String)
+    claim_description = Column(String(1000))
 
     claim_open_date = Column(Date)
 
@@ -1356,7 +1360,7 @@ class Claim(Base):
 
     claim_reopen_date = Column(Date)
 
-    claim_status_code = Column(String)
+    claim_status_code = Column(String(10))
 
     claim_reported_date = Column(Date)
 
@@ -1476,7 +1480,7 @@ class InsurableObjectPartyRole(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
@@ -1532,7 +1536,7 @@ class ClaimPartyRole(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
@@ -1606,7 +1610,7 @@ class Agreement(Base):
 
     agreement_type_code = Column(Integer)
 
-    agreement_name = Column(String)
+    agreement_name = Column(String(100))
 
     agreement_original_inception_date = Column(Date)
 
@@ -1751,7 +1755,7 @@ class AgreementPartyRole(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 

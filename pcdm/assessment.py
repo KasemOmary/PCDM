@@ -17,9 +17,9 @@ class Assessment(Base):
 
     end_date = Column(Date)
 
-    assessment_description = Column(String)
+    assessment_description = Column(String(1000))
 
-    assessment_reason_description = Column(String)
+    assessment_reason_description = Column(String(1000))
 
     assessment_party_role = relationship(
         'AssessmentPartyRole',
@@ -85,7 +85,7 @@ class AssessmentPartyRole(Base):
     )
 
     party_role_code = Column(
-        String,
+        String(10),
         ForeignKey('party_role.party_role_code')
     )
 
