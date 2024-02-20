@@ -961,7 +961,7 @@ class LegalJurisdiction(Base):
 
     legal_jurisdiction_name = Column(String(100))
     legal_jurisdiction_description = Column(String(1000))
-    rules_preference_description = Column(String(1000))
+    rules_reference_description = Column(String(1000))
 
     legal_jurisdiction_party_identity = relationship(
         'LegalJurisdictionPartyIdentity',
@@ -973,11 +973,11 @@ class LegalJurisdiction(Base):
         return "<LegalJurisdiction(" \
                "legal_jurisdiction_name='%s', " \
                "legal_jurisdiction_description='%s', " \
-               "rules_preference_description='%s', "\
+               "rules_reference_description='%s', "\
                ")>" % (
                    self.legal_jurisdiction_name,
                    self.legal_jurisdiction_description,
-                   self.rules_preference_description
+                   self.rules_reference_description
                 )
 
 
